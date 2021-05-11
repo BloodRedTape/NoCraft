@@ -1,0 +1,8 @@
+StraitX
+compile_commands.json
+build
+cmake-build-debug
+.cache
+.idea
+.vs
+.vscode
