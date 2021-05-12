@@ -14,6 +14,7 @@ Result Minecraft::OnInitialize(){
 }
 
 void Minecraft::OnUpdate(float dt){
+    //Println("InUse: % KB", Memory::InUse() / 1024);
 
     m_Player.Update(dt);
 

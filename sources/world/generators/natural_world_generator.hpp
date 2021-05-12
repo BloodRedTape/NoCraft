@@ -9,7 +9,7 @@
 
 class NaturalWorldGenerator: public WorldGenerator{
 private:
-    static constexpr size_t s_WorldPower = 13;//13;
+    static constexpr size_t s_WorldPower = 12;//13;
     static constexpr size_t s_GeneratorSize = 2 << s_WorldPower;
     NoiseGenerator2D<s_GeneratorSize> m_TerrainGenerator;
     NoiseGenerator2D<s_GeneratorSize> m_BiomeGenerator;

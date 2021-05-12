@@ -15,15 +15,15 @@ Vector2<s64> GetChunkOffset(Vector2i chunk_coords){
 }
 
 u8 NaturalWorldGenerator::GetWorldHeight(Vector2<s64> block_coords){
-    return (m_TerrainGenerator.GetWrapped(block_coords.x, block_coords.y, 8) - 0.3)*m_GenerationSpan + m_WaterLevel;
+    return (m_TerrainGenerator.GetWrapped(block_coords.x - 23452, block_coords.y + 987345, 8) - 0.3)*m_GenerationSpan + m_WaterLevel;
 }
 
 Biome NaturalWorldGenerator::GetWorldBiome(Vector2<s64> block_coords){
-    return Biome(m_BiomeGenerator.GetWrapped(block_coords.x, block_coords.y, 5) * (int)Biome::Count);
+    return Biome(m_BiomeGenerator.GetWrapped(block_coords.x + 98456, block_coords.y - 53335, 5) * (int)Biome::Count);
 }
 
 short NaturalWorldGenerator::GetEntityValue(Vector2<s64> block_coords){
-    return m_EntitiesPlot.GetWrapped(block_coords.x, block_coords.y) * std::numeric_limits<short>::max();
+    return m_EntitiesPlot.GetWrapped(block_coords.x + 9675, block_coords.y + 32412) * std::numeric_limits<short>::max();
 }
 
 void NaturalWorldGenerator::Generate(Chunk &chunk, Vector2i chunk_coords){
