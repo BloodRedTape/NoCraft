@@ -5,7 +5,7 @@
 #include <memory>
 #include <unordered_map>
 #include "core/math/vector2.hpp"
-#include "chunk.hpp"
+#include "world/chunk.hpp"
 #include "world/generators/world_generator.hpp"
 
 namespace std{

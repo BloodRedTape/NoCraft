@@ -17,6 +17,9 @@ set(SOURCES
     sources/world/generators/biome.cpp
     sources/world/generators/extreme_world_generator.cpp
     sources/world/generators/natural_world_generator.cpp
+    sources/scenes/scene.cpp
+    sources/scenes/game_scene.cpp
+    sources/scenes/main_menu_scene.cpp
 )
 
 add_subdirectory(StraitX/Engine)
