@@ -14,3 +14,4 @@ bool BaseScene::OnEvent(const Event &e){
 }
 
 std::unique_ptr<BaseScene> SceneManager::s_CurrentScene;
+std::unique_ptr<BaseScene> SceneManager::s_Candidate;

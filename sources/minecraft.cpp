@@ -13,6 +13,8 @@ Result Minecraft::OnInitialize(){
 }
 
 void Minecraft::OnUpdate(float dt){
+    if(Keyboard::IsKeyPressed(Key::Q))
+        Stop();
     SceneManager::GetCurrentScene()->OnUpdate(dt);
 }
 

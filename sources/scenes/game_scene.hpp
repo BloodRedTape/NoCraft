@@ -11,6 +11,9 @@
 #include "graphics/renderer_2d.hpp"
 #include "servers/display_server.hpp"
 
+#include "layers/game_pause_layer.hpp"
+#include "layers/inventory_layer.hpp"
+
 class GameScene: public BaseScene{
 private:
     World m_World{std::move(std::make_unique<NaturalWorldGenerator>(12345))};
@@ -18,14 +21,30 @@ private:
     Player m_Player;
 
     Renderer2D m_UIRenderer{DisplayServer::Window.Pass()};
+
+    Layer *m_CurrentLayer = nullptr;
+
+    GamePauseLayer m_GamePauseLayer;
+    InventoryLayer m_InventoryLayer;
 public:
     GameScene();
-
-    ~GameScene();
 
     void OnUpdate(float dt)override;
 
     bool OnEvent(const Event &e)override;
+
+    void PushLayer(Layer *layer){
+        m_CurrentLayer = layer;
+        m_CurrentLayer->Storage = &m_CurrentLayer;
+        m_CurrentLayer->OnBecomeTop();
+    }
+
+    void PopLayer(){
+        if(m_CurrentLayer){
+            m_CurrentLayer->OnStopBeingTop();
+            m_CurrentLayer = nullptr;
+        }
+    }
 };
 
 

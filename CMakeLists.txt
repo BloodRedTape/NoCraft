@@ -20,6 +20,8 @@ set(SOURCES
     sources/scenes/scene.cpp
     sources/scenes/game_scene.cpp
     sources/scenes/main_menu_scene.cpp
+    sources/layers/game_pause_layer.cpp
+    sources/layers/inventory_layer.cpp
 )
 
 add_subdirectory(StraitX/Engine)

@@ -31,6 +31,10 @@ public:
     void Pick(World &world);
 
     void Move(Vector3f g_direction);
+
+    Vector2i MouseResetPosition(){
+        return {800, 400};
+    }
 };
 
 #endif//PLAYER_HPP

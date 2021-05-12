@@ -21,11 +21,10 @@ void Player::Update(float dt){
         Move({0, 0,-m_Speed * dt});
 
 
-    Vector2i global_position(800, 400);
 
-    auto offset = Vector2i{Mouse::GlobalPosition().x, Mouse::GlobalPosition().y} - global_position;
+    auto offset = Vector2i{Mouse::GlobalPosition().x, Mouse::GlobalPosition().y} - MouseResetPosition();
 
-    Mouse::SetGlobalPosition({global_position.x, global_position.y});
+    Mouse::SetGlobalPosition({MouseResetPosition().x, MouseResetPosition().y});
 
     m_Camera.Rotate(Vector3f(-offset.y, offset.x, 0)/(1/m_MouseSpeed));
 

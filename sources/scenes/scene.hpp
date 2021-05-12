@@ -23,6 +23,7 @@ struct BaseScene{
 class SceneManager{
 private:
     static std::unique_ptr<BaseScene> s_CurrentScene;
+    static std::unique_ptr<BaseScene> s_Candidate;
 public:
     static void SetScene(std::unique_ptr<BaseScene> scene){
         KillCurrent();
@@ -30,10 +31,11 @@ public:
     }
 
     static void KillCurrent(){
-        s_CurrentScene.reset();
+        s_Candidate = std::move(s_CurrentScene);
     }
 
     static BaseScene *GetCurrentScene(){
+        s_Candidate.reset();
         return s_CurrentScene.get();
     }
 };
