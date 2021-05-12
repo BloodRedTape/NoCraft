@@ -9,7 +9,7 @@
 
 class NaturalWorldGenerator: public WorldGenerator{
 private:
-    static constexpr size_t s_WorldPower = 8;//13;
+    static constexpr size_t s_WorldPower = 13;//13;
     static constexpr size_t s_GeneratorSize = 2 << s_WorldPower;
     NoiseGenerator2D<s_GeneratorSize> m_TerrainGenerator;
     NoiseGenerator2D<s_GeneratorSize> m_BiomeGenerator;
@@ -25,7 +25,11 @@ public:
 
     virtual void Generate(Chunk &chunk, Vector2i coords)override;
 
-    Biome GetBiome(Vector2i block_coords);
+    u8 GetWorldHeight(Vector2<s64> block_coords);
+
+    Biome GetWorldBiome(Vector2<s64> block_coords);
+
+    short GetEntityValue(Vector2<s64> block_coords);
 
 };
 

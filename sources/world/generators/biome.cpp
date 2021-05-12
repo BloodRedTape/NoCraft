@@ -9,10 +9,10 @@ void BuildCactus(Chunk &chunk, Vector3i origin);
 
 BiomeDefinition s_BiomeTable[]={
     {
-        Block::Grass,
+        Block::WinterGrass,
         Block::Dirt,
-        200000,
-        &BuildNothing
+        80,
+        &BuildSpruceTree
     },
     {
         Block::Grass,
@@ -21,22 +21,22 @@ BiomeDefinition s_BiomeTable[]={
         &BuildBirchTree
     },
     {
-        Block::Grass,
-        Block::Dirt,
-        50,
-        &BuildOakTree
-    },
-    {
         Block::Sand,
         Block::Sand,
         200,
         &BuildCactus
     },
     {
-        Block::WinterGrass,
+        Block::Grass,
         Block::Dirt,
-        80,
-        &BuildSpruceTree
+        50,
+        &BuildOakTree
+    },
+    {
+        Block::Grass,
+        Block::Dirt,
+        200000,
+        &BuildNothing
     },
 };
 
@@ -134,6 +134,6 @@ void BuildCactus(Chunk &chunk, Vector3i origin){
     int cactus_height = 3;
 
     for(int i = origin.y; i<std::min(256, origin.y + cactus_height); i++)
-        chunk.Set({origin.x, i, origin.z}, Block::Cactus);
+        chunk.TrySet({origin.x, i, origin.z}, Block::Cactus);
 }
 

@@ -5,11 +5,11 @@
 #include "world/world.hpp"
 
 enum class Biome: u8{
-    FlatLand,
-    BirchLand,
-    Forest,
-    Desert,
     Winter,
+    BirchLand,
+    Desert,
+    Forest,
+    FlatLand,
     Count
 };
 

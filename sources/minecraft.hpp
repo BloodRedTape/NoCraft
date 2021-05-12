@@ -15,7 +15,7 @@ using namespace StraitX;
 
 class Minecraft: public Application{
 private:
-    World m_World{std::move(std::make_unique<NaturalWorldGenerator>(1234))};
+    World m_World{std::move(std::make_unique<NaturalWorldGenerator>(12345))};
     WorldRenderer m_Renderer{&m_World};
     Player m_Player;
 
