@@ -36,12 +36,10 @@ public:
     void PushLayer(Layer *layer){
         m_CurrentLayer = layer;
         m_CurrentLayer->Storage = &m_CurrentLayer;
-        m_CurrentLayer->OnBecomeTop();
     }
 
     void PopLayer(){
         if(m_CurrentLayer){
-            m_CurrentLayer->OnStopBeingTop();
             m_CurrentLayer = nullptr;
         }
     }

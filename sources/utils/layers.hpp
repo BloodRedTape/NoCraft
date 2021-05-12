@@ -31,52 +31,7 @@ struct Layer{
         (void)e;
         return false;
     }
-
-    virtual void OnBecomeTop(){
-        (void)0;
-    }
-
-    virtual void OnStopBeingTop(){
-        (void)0;
-    }
 };
 
-class LayerStack{
-private:
-    PushArray<Layer *, 16> m_Layers;
-public:
-    void PushLayer(Layer *layer){
-        if(Size())
-            m_Layers[Size()-1]->OnStopBeingTop();
-        m_Layers.Push(layer);
-        layer->OnBecomeTop();
-    }
-
-    Layer *PopLayer(){
-        Layer *layer = m_Layers[m_Layers.Size() - 1];
-        m_Layers.Pop();
-        if(Size())
-            m_Layers[Size()-1]->OnBecomeTop();
-        return layer;
-    }
-
-    void OnEvent(const Event &e){
-        for(int i = m_Layers.Size() - 1; i>=0; i--)
-            if(m_Layers[i]->OnEvent(e))return;
-    }
-
-    void OnRender(){
-        for(Layer *layer: m_Layers)
-            layer->OnRender();
-    }
-
-    void OnUpdate(float dt){
-        if(m_Layers.Size())
-            m_Layers[m_Layers.Size()-1]->OnUpdate(dt);
-    }
-    size_t Size(){
-        return m_Layers.Size();
-    }
-};
 
 #endif//LAYERS_HPP
