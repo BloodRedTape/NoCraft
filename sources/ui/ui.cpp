@@ -27,3 +27,21 @@ bool UI::Button(const std::string &text, Vector2i position, Vector2i size){
 }
 
 
+VerticalLayout::VerticalLayout(Vector2i layout_origin, Vector2i layout_size, Vector2i button_size, s32 button_distance):
+    m_LayoutOrigin(layout_origin),
+    m_LayoutSize(layout_size),
+    m_ButtonSize(button_size),
+    m_ButtonDistance(button_distance),
+    m_CurrentIndex(0)
+{}
+
+bool VerticalLayout::Button(const std::string &text){
+    auto press = UI::Button(text, {m_LayoutOrigin.x + m_LayoutSize.x/2 - m_ButtonSize.x/2, m_LayoutOrigin.y + m_ButtonSize.y * m_CurrentIndex + m_ButtonDistance * m_CurrentIndex}, m_ButtonSize);
+    m_CurrentIndex++;
+    return press;
+}
+
+void VerticalLayout::Reset(){
+    m_CurrentIndex = 0;
+}
+
