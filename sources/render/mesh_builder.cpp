@@ -93,10 +93,10 @@ void PushFace(Block block, Face face, Vector3f offset){
     vertices[2].a_Position = cube_positions[face*4 + 2] + offset;
     vertices[3].a_Position = cube_positions[face*4 + 3] + offset;
 
-    vertices[0].a_TexCoord = {coords.First.x,                 coords.First.y + coords.Second};
-    vertices[1].a_TexCoord = {coords.First.x + coords.Second, coords.First.y};
-    vertices[2].a_TexCoord = {coords.First.x,                 coords.First.y};
-    vertices[3].a_TexCoord = {coords.First.x + coords.Second, coords.First.y + coords.Second};
+    vertices[0].a_TexCoord = {coords.First.x,                   coords.First.y + coords.Second.y};
+    vertices[1].a_TexCoord = {coords.First.x + coords.Second.x, coords.First.y};
+    vertices[2].a_TexCoord = {coords.First.x,                   coords.First.y};
+    vertices[3].a_TexCoord = {coords.First.x + coords.Second.x, coords.First.y + coords.Second.y};
     
     PushVertex(vertices[0]);
     PushVertex(vertices[1]);

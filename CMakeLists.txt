@@ -12,6 +12,7 @@ set(SOURCES
     sources/render/texture_atlas.cpp
     sources/render/camera.cpp
     sources/render/mesh.cpp
+    sources/render/ui_renderer.cpp
     sources/world/block.cpp
     sources/world/world.cpp
     sources/world/generators/biome.cpp

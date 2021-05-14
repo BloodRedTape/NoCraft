@@ -3,12 +3,11 @@
 
 #include "scene.hpp"
 #include "utils/rect.hpp"
-#include "graphics/renderer_2d.hpp"
-#include "servers/display_server.hpp"
+#include "render/ui_renderer.hpp"
 
 class MainMenuScene: public BaseScene{
 private:
-    Renderer2D m_UIRenderer{DisplayServer::Window.Pass()};
+    UIRenderer m_UIRenderer;
 
     Vector2i m_WindowSize{DisplayServer::Window.Size().width, DisplayServer::Window.Size().height};
 
@@ -18,6 +17,11 @@ private:
     s32 m_OriginY = m_WindowSize.y/4;
     Rect m_Play{{m_OriginX, m_OriginY}, {m_OriginX + m_ButtonSize.x, m_OriginY + m_ButtonSize.y}};
 
+    int button_index = 0;
+    int button_padding = m_ButtonSize.y/4;
+
+    Texture m_Background;
+    Texture m_LoadingScreen;
 public:
     MainMenuScene();
 
@@ -25,10 +29,7 @@ public:
 
     bool OnEvent(const Event &e)override;
 
-    Vector2i MousePosition(){
-        auto pos = Mouse::RelativePosition(DisplayServer::Window);
-        return {pos.x, DisplayServer::Window.Size().height - pos.y};
-    }
+    bool MenuButton(const std::string &text);
 
     void OnPlayPressed();
 };

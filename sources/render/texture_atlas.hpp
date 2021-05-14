@@ -8,12 +8,13 @@
 using namespace StraitX;
 
 struct TextureAtlas{
-    static constexpr u32 BlockSize = 16;
     Texture MainTexture;
+    int ElementWidth;
+    int ElementHeight;
 
-    TextureAtlas(const char *texture_path);
+    TextureAtlas(const char *texture_path, int element_width = 16, int element_height = 16);
 
-    Pair<Vector2f, float> GetTextureCoordsBase(int block_index);
+    Pair<Vector2f, Vector2f> GetTextureCoordsBase(int block_index);
 
     static TextureAtlas &Get();
 };
