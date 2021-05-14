@@ -36,7 +36,7 @@ VerticalLayout::VerticalLayout(Vector2i layout_origin, Vector2i layout_size, Vec
 {}
 
 bool VerticalLayout::Button(const std::string &text){
-    auto press = UI::Button(text, {m_LayoutOrigin.x + m_LayoutSize.x/2 - m_ButtonSize.x/2, m_LayoutOrigin.y + m_ButtonSize.y * m_CurrentIndex + m_ButtonDistance * m_CurrentIndex}, m_ButtonSize);
+    auto press = UI::Button(text, {m_LayoutOrigin.x + m_LayoutSize.x/2 - m_ButtonSize.x/2, m_LayoutOrigin.y - m_ButtonSize.y * m_CurrentIndex - m_ButtonDistance * m_CurrentIndex - m_ButtonSize.y}, m_ButtonSize);
     m_CurrentIndex++;
     return press;
 }

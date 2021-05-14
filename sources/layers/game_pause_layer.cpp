@@ -10,10 +10,10 @@ void GamePauseLayer::OnUpdate(float dt){
 void GamePauseLayer::OnRender(){
     Render2D::DrawRect({0,0}, WindowSize, Color(0.2, 0.2, 0.2, 0.5f));
 
-    if(Button("Save and Quit"))
-        SceneManager::SetScene(std::make_unique<MainMenuScene>());
+    VerticalLayout layout{{0, WindowSize.y/2}, {WindowSize.x, WindowSize.y/2}, {WindowSize.x/2, WindowSize.y / 10}, WindowSize.y / 40};
 
-    button_index = 0;
+    if(layout.Button("Save and Quit"))
+        SceneManager::SetScene(std::make_unique<MainMenuScene>());
 }
     
 bool GamePauseLayer::OnEvent(const Event &e){    
@@ -24,10 +24,4 @@ bool GamePauseLayer::OnEvent(const Event &e){
         }
     }
     return false;
-}
-
-bool GamePauseLayer::Button(const std::string &text){
-    auto pressed = UI::Button(text, {m_Exit.Position().x, m_Exit.Position().y + (m_Exit.Size().y * button_index) + button_padding*button_index}, m_Exit.Size());
-    ++button_index;
-    return pressed;
 }

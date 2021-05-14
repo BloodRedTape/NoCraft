@@ -5,11 +5,6 @@
 #include "ui/ui.hpp"
 
 MainMenuScene::MainMenuScene(){
-    Println("WindowSize: %", m_WindowSize);
-    Println("ButtonSize: %", m_ButtonSize);
-    Println("Origin: %", m_OriginX);
-
-    Println("% %", m_Play.Begin, m_Play.End);
     SamplerProperties props;
     props.MagFiltering = FilteringMode::Nearest;
 
@@ -24,22 +19,16 @@ void MainMenuScene::OnUpdate(float dt){
     Render2D::DrawRect({0,0}, m_WindowSize, m_Background);
     Render2D::DrawRect({m_WindowSize.x/4, m_WindowSize.y/2}, {m_WindowSize.x/2, m_WindowSize.y/4}, m_Logo);
 
-    if(MenuButton("Exit")){
+
+    VerticalLayout layout{{0, m_WindowSize.y/2}, {m_WindowSize.x, m_WindowSize.y/2}, {m_WindowSize.x/2, m_WindowSize.y / 10}, m_WindowSize.y / 40};
+
+    if(layout.Button("Play")){
+        OnPlayPressed();
+    }
+
+    if(layout.Button("Exit")){
         Stop();
     }
-
-    if(MenuButton("Play")){
-        OnPlayPressed();
-        return;
-    }
-    button_index = 0;
-
-}
-
-bool MainMenuScene::MenuButton(const std::string &text){
-    auto pressed = UI::Button(text, {m_Play.Position().x, m_Play.Position().y + (m_Play.Size().y * button_index) + button_padding*button_index}, m_Play.Size());
-    ++button_index;
-    return pressed;
 }
 
 void MainMenuScene::OnPlayPressed(){
