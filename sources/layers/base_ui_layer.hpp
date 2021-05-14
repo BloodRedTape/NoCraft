@@ -4,11 +4,11 @@
 #include "utils/layers.hpp"
 #include "utils/rect.hpp"
 
-#include "graphics/renderer_2d.hpp"
+#include "render/ui_renderer.hpp"
 #include "servers/display_server.hpp"
 
 struct BaseUILayer: Layer{
-    Renderer2D UIRenderer{DisplayServer::Window.Pass()};
+    class UIRenderer UIRenderer;
 
     Vector2i WindowSize{DisplayServer::Window.Size().width, DisplayServer::Window.Size().height};
 

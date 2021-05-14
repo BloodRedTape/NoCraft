@@ -38,6 +38,7 @@ void MainMenuScene::OnUpdate(float dt){
 }
 
 bool MainMenuScene::OnEvent(const Event &e){
+    m_UIRenderer.HandleEvent(e);
     return false;
 }
 

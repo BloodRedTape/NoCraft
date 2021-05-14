@@ -5,7 +5,7 @@
 
 UIRenderer::UIRenderer():
     Renderer2D(DisplayServer::Window.Pass()),
-    m_Font("resources/font.png", s_GlyphWidth, s_GlyphHeight)
+    m_Font("resources/font_2.png", s_GlyphWidth, s_GlyphHeight)
 {
     SamplerProperties props;
     props.MagFiltering = FilteringMode::Nearest;
@@ -14,12 +14,17 @@ UIRenderer::UIRenderer():
     Assert(res);
 }
 
+void UIRenderer::HandleEvent(const Event &e){
+    m_LastEvent = e;
+}
+
 void UIRenderer::Begin(){
     BeginScene(DisplayServer::Window.CurrentFramebuffer());
 }
 
 void UIRenderer::End(){
     EndScene();
+    m_LastEvent.Type = EventType::Unknown;
 }
 
 void UIRenderer::DrawString(const std::string &string, int font_height, Vector2i position){
@@ -55,7 +60,7 @@ bool UIRenderer::DoButton(const std::string &text, Vector2i position, Vector2i s
     Rect button{position, position + size};
     DrawButton(button.Position(), button.Size(), button.Contains(MousePosition()) ? Color(0.8, 0.8, 0.8, 1.f) : Color::White);
     DrawString(text, 50, button.Position() + (button.Size()/2 - GetTextSize(text, 50)/2));
-    return button.Contains(MousePosition()) && Mouse::IsButtonPressed(Mouse::Left);
+    return button.Contains(MousePosition()) && (m_LastEvent.Type == EventType::MouseButtonPress && m_LastEvent.MouseButtonPress.Button == Mouse::Left);
 }
 
 int UIRenderer::CharToIndex(char ch){

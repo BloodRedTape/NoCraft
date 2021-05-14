@@ -15,6 +15,7 @@ void InventoryLayer::OnRender(){
 }
     
 bool InventoryLayer::OnEvent(const Event &e){
+    UIRenderer.HandleEvent(e);
     if(e.Type == EventType::KeyPress){
         if(e.KeyPress.KeyCode == Key::Escape || e.KeyPress.KeyCode == Key::E){
             PopSelf();

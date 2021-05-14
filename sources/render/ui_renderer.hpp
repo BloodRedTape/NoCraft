@@ -4,7 +4,7 @@
 #include <string>
 #include "graphics/renderer_2d.hpp"
 #include "texture_atlas.hpp"
-
+#include "platform/events.hpp"
 
 using namespace StraitX;
 
@@ -14,8 +14,11 @@ private:
     static constexpr int s_GlyphHeight = 8;
     TextureAtlas m_Font;
     Texture m_ButtonTexture;
+    Event m_LastEvent;
 public:
     UIRenderer();
+
+    void HandleEvent(const Event &e);
 
     void Begin();
 
