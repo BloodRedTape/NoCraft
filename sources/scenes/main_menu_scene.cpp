@@ -12,6 +12,7 @@ MainMenuScene::MainMenuScene(){
     props.MagFiltering = FilteringMode::Nearest;
 
     m_Background.LoadFromFile("resources/background.png");
+    m_Logo.LoadFromFile("resources/logo.png");
     m_LoadingScreen.LoadFromFile("resources/dirt.png", props);
 }
 
@@ -21,6 +22,7 @@ void MainMenuScene::OnUpdate(float dt){
     m_UIRenderer.Begin();
     {
         m_UIRenderer.DrawRect({0,0}, m_WindowSize, m_Background);
+        m_UIRenderer.DrawRect({m_WindowSize.x/4, m_WindowSize.y/2}, {m_WindowSize.x/2, m_WindowSize.y/4}, m_Logo);
 
         if(MenuButton("Exit")){
             Stop();

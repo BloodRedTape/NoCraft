@@ -21,6 +21,7 @@ private:
     int button_padding = m_ButtonSize.y/4;
 
     Texture m_Background;
+    Texture m_Logo;
     Texture m_LoadingScreen;
 public:
     MainMenuScene();
