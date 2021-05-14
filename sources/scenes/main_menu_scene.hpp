@@ -3,12 +3,10 @@
 
 #include "scene.hpp"
 #include "utils/rect.hpp"
-#include "render/ui_renderer.hpp"
+#include "graphics/texture.hpp"
 
 class MainMenuScene: public BaseScene{
 private:
-    UIRenderer m_UIRenderer;
-
     Vector2i m_WindowSize{DisplayServer::Window.Size().width, DisplayServer::Window.Size().height};
 
     Vector2i m_ButtonSize{m_WindowSize.x/2, m_WindowSize.y / 10};
@@ -27,8 +25,6 @@ public:
     MainMenuScene();
 
     void OnUpdate(float dt)override;
-
-    bool OnEvent(const Event &e)override;
 
     bool MenuButton(const std::string &text);
 

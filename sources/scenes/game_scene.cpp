@@ -15,24 +15,18 @@ void GameScene::OnUpdate(float dt){
             Mouse::SetGlobalPosition({m_Player.MouseResetPosition().x, m_Player.MouseResetPosition().y});
     }
     
-    DisplayServer::Window.ClearColorBuffer(Color::LightBlue);
-    DisplayServer::Window.ClearDepthBuffer();
+    Render2D::Clear(Color::LightBlue);
 
     m_Renderer.Render(m_Player.GetCamera());
 
-    m_UIRenderer.BeginScene(DisplayServer::Window.CurrentFramebuffer());
-    {
-        auto size = DisplayServer::Window.Size();
-        Vector2i pointer_size(20, 5);
-        m_UIRenderer.DrawRect({size.width/2 - pointer_size.x/2, size.height/2 - pointer_size.y/2}, {pointer_size.x, pointer_size.y}, Color(0,0,0,0.5f));
-        m_UIRenderer.DrawRect({size.width/2 - pointer_size.y/2, size.height/2 - pointer_size.x/2}, {pointer_size.y, pointer_size.x}, Color(0,0,0,0.5f));
-    }
-    m_UIRenderer.EndScene();
+    auto size = DisplayServer::Window.Size();
+    Vector2i pointer_size(20, 5);
+    Render2D::DrawRect({size.width/2 - pointer_size.x/2, size.height/2 - pointer_size.y/2}, {pointer_size.x, pointer_size.y}, Color(0,0,0,0.5f));
+    Render2D::DrawRect({size.width/2 - pointer_size.y/2, size.height/2 - pointer_size.x/2}, {pointer_size.y, pointer_size.x}, Color(0,0,0,0.5f));
+
 
     if(m_CurrentLayer)
         m_CurrentLayer->OnRender();
-
-    DisplayServer::Window.SwapBuffers();
 }
 
 bool GameScene::OnEvent(const Event &e){

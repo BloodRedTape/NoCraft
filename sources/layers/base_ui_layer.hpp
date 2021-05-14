@@ -8,7 +8,6 @@
 #include "servers/display_server.hpp"
 
 struct BaseUILayer: Layer{
-    class UIRenderer UIRenderer;
 
     Vector2i WindowSize{DisplayServer::Window.Size().width, DisplayServer::Window.Size().height};
 

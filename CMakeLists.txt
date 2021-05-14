@@ -6,6 +6,7 @@ set(SOURCES
     sources/main.cpp
     sources/minecraft.cpp 
     sources/player.cpp
+    sources/render/render_2d.cpp
     sources/render/chunk_renderer.cpp
     sources/render/world_renderer.cpp
     sources/render/mesh_builder.cpp

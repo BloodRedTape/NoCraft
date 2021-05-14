@@ -1,30 +1,31 @@
 #include "ui_renderer.hpp"
 #include "utils/rect.hpp"
+#include "render/render_2d.hpp"
 #include "servers/display_server.hpp"
 #include <cmath>
 
-UIRenderer::UIRenderer():
-    Renderer2D(DisplayServer::Window.Pass()),
-    m_Font("resources/font_2.png", s_GlyphWidth, s_GlyphHeight)
-{
+static TextureAtlas *s_Font;
+static Texture s_ButtonTexture;
+static Event s_LastEvent{EventType::Unknown};
+
+void UIRenderer::Init(){
+    s_Font = new TextureAtlas("resources/font_2.png", s_GlyphWidth, s_GlyphHeight);
+
     SamplerProperties props;
     props.MagFiltering = FilteringMode::Nearest;
-
-    auto res = m_ButtonTexture.LoadFromFile("resources/button.png", props);
-    Assert(res);
+    s_ButtonTexture.LoadFromFile("resources/button.png", props);
 }
 
-void UIRenderer::HandleEvent(const Event &e){
-    m_LastEvent = e;
+void UIRenderer::SetNewUIState(const Event &e){
+    s_LastEvent = e;
 }
 
 void UIRenderer::Begin(){
-    BeginScene(DisplayServer::Window.CurrentFramebuffer());
+    (void)0;
 }
 
 void UIRenderer::End(){
-    EndScene();
-    m_LastEvent.Type = EventType::Unknown;
+    s_LastEvent.Type = EventType::Unknown;
 }
 
 void UIRenderer::DrawString(const std::string &string, int font_height, Vector2i position){
@@ -32,7 +33,7 @@ void UIRenderer::DrawString(const std::string &string, int font_height, Vector2i
     int font_width = std::ceil((float(s_GlyphWidth)/s_GlyphHeight) * font_height);
     for(char c: string){
         int index = CharToIndex(c);
-        auto coords_data = m_Font.GetTextureCoordsBase(index);
+        auto coords_data = s_Font->GetTextureCoordsBase(index);
 
         Vector2f coords[4] = {
             {coords_data.First.x,                        coords_data.First.y + coords_data.Second.y},
@@ -41,7 +42,7 @@ void UIRenderer::DrawString(const std::string &string, int font_height, Vector2i
             {coords_data.First.x + coords_data.Second.x, coords_data.First.y + coords_data.Second.y},
         };
 
-        DrawRect({position.x + x_offset, position.y}, {font_width, font_height}, m_Font.MainTexture, coords);
+        Render2D::DrawRect({position.x + x_offset, position.y}, {font_width, font_height}, s_Font->MainTexture, coords);
 
         x_offset += font_width;
     }
@@ -53,14 +54,14 @@ Vector2i UIRenderer::GetTextSize(const std::string &text, int font_height){
 }
 
 void UIRenderer::DrawButton(Vector2i position, Vector2i size, Color tint){
-    DrawRect(position, size, tint, m_ButtonTexture);
+    Render2D::DrawRect(position, size, tint, s_ButtonTexture);
 }
 
 bool UIRenderer::DoButton(const std::string &text, Vector2i position, Vector2i size){
     Rect button{position, position + size};
     DrawButton(button.Position(), button.Size(), button.Contains(MousePosition()) ? Color(0.8, 0.8, 0.8, 1.f) : Color::White);
     DrawString(text, 50, button.Position() + (button.Size()/2 - GetTextSize(text, 50)/2));
-    return button.Contains(MousePosition()) && (m_LastEvent.Type == EventType::MouseButtonPress && m_LastEvent.MouseButtonPress.Button == Mouse::Left);
+    return button.Contains(MousePosition()) && (s_LastEvent.Type == EventType::MouseButtonPress && s_LastEvent.MouseButtonPress.Button == Mouse::Left);
 }
 
 int UIRenderer::CharToIndex(char ch){
