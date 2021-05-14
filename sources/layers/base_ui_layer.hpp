@@ -10,11 +10,6 @@
 struct BaseUILayer: Layer{
 
     Vector2i WindowSize{DisplayServer::Window.Size().width, DisplayServer::Window.Size().height};
-
-    Vector2i MousePosition(){
-        auto pos = Mouse::RelativePosition(DisplayServer::Window);
-        return {pos.x, DisplayServer::Window.Size().height - pos.y};
-    }
 };
 
 #endif//BASE_UI_LAYER_HPP

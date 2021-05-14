@@ -5,6 +5,7 @@
 #include "servers/display_server.hpp"
 #include "render/render_2d.hpp"
 #include "render/ui_renderer.hpp"
+#include "ui/ui.hpp"
 #include "platform/memory.hpp"
 
 #include "scenes/main_menu_scene.hpp"
@@ -23,17 +24,16 @@ void Minecraft::OnUpdate(float dt){
         Stop();
     Render2D::Begin();
     {
-        UIRenderer::Begin();
-        {
-            SceneManager::GetCurrentScene()->OnUpdate(dt);
-        }
-        UIRenderer::End();
+
+        SceneManager::GetCurrentScene()->OnUpdate(dt);
+
     }
     Render2D::End(); Render2D::SwapBuffers();
+    UI::ResetUIState();
 }
 
 bool Minecraft::OnEvent(const Event &e){
-    UIRenderer::SetNewUIState(e);
+    UI::SetUIState(e);
 
     return SceneManager::GetCurrentScene()->OnEvent(e);
 }

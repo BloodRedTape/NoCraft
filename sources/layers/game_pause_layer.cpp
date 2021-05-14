@@ -1,6 +1,7 @@
 #include "game_pause_layer.hpp"
 #include "scenes/main_menu_scene.hpp"
 #include "render/render_2d.hpp"
+#include "ui/ui.hpp"
 
 void GamePauseLayer::OnUpdate(float dt){
     (void)dt;
@@ -26,7 +27,7 @@ bool GamePauseLayer::OnEvent(const Event &e){
 }
 
 bool GamePauseLayer::Button(const std::string &text){
-    auto pressed = UIRenderer::DoButton(text, {m_Exit.Position().x, m_Exit.Position().y + (m_Exit.Size().y * button_index) + button_padding*button_index}, m_Exit.Size());
+    auto pressed = UI::Button(text, {m_Exit.Position().x, m_Exit.Position().y + (m_Exit.Size().y * button_index) + button_padding*button_index}, m_Exit.Size());
     ++button_index;
     return pressed;
 }

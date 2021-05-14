@@ -14,6 +14,7 @@ set(SOURCES
     sources/render/camera.cpp
     sources/render/mesh.cpp
     sources/render/ui_renderer.cpp
+    sources/ui/ui.cpp
     sources/world/block.cpp
     sources/world/world.cpp
     sources/world/generators/biome.cpp

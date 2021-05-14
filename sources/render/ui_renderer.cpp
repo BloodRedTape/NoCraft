@@ -6,7 +6,6 @@
 
 static TextureAtlas *s_Font;
 static Texture s_ButtonTexture;
-static Event s_LastEvent{EventType::Unknown};
 
 void UIRenderer::Init(){
     s_Font = new TextureAtlas("resources/font_2.png", s_GlyphWidth, s_GlyphHeight);
@@ -14,18 +13,6 @@ void UIRenderer::Init(){
     SamplerProperties props;
     props.MagFiltering = FilteringMode::Nearest;
     s_ButtonTexture.LoadFromFile("resources/button.png", props);
-}
-
-void UIRenderer::SetNewUIState(const Event &e){
-    s_LastEvent = e;
-}
-
-void UIRenderer::Begin(){
-    (void)0;
-}
-
-void UIRenderer::End(){
-    s_LastEvent.Type = EventType::Unknown;
 }
 
 void UIRenderer::DrawString(const std::string &string, int font_height, Vector2i position){
@@ -55,13 +42,6 @@ Vector2i UIRenderer::GetTextSize(const std::string &text, int font_height){
 
 void UIRenderer::DrawButton(Vector2i position, Vector2i size, Color tint){
     Render2D::DrawRect(position, size, tint, s_ButtonTexture);
-}
-
-bool UIRenderer::DoButton(const std::string &text, Vector2i position, Vector2i size){
-    Rect button{position, position + size};
-    DrawButton(button.Position(), button.Size(), button.Contains(MousePosition()) ? Color(0.8, 0.8, 0.8, 1.f) : Color::White);
-    DrawString(text, 50, button.Position() + (button.Size()/2 - GetTextSize(text, 50)/2));
-    return button.Contains(MousePosition()) && (s_LastEvent.Type == EventType::MouseButtonPress && s_LastEvent.MouseButtonPress.Button == Mouse::Left);
 }
 
 int UIRenderer::CharToIndex(char ch){

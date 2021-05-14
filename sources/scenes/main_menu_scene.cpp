@@ -2,6 +2,7 @@
 #include "main_menu_scene.hpp"
 #include "game_scene.hpp"
 #include "render/render_2d.hpp"
+#include "ui/ui.hpp"
 
 MainMenuScene::MainMenuScene(){
     Println("WindowSize: %", m_WindowSize);
@@ -36,7 +37,7 @@ void MainMenuScene::OnUpdate(float dt){
 }
 
 bool MainMenuScene::MenuButton(const std::string &text){
-    auto pressed = UIRenderer::DoButton(text, {m_Play.Position().x, m_Play.Position().y + (m_Play.Size().y * button_index) + button_padding*button_index}, m_Play.Size());
+    auto pressed = UI::Button(text, {m_Play.Position().x, m_Play.Position().y + (m_Play.Size().y * button_index) + button_padding*button_index}, m_Play.Size());
     ++button_index;
     return pressed;
 }
