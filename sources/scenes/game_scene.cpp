@@ -18,7 +18,8 @@ std::unique_ptr<WorldGenerator> GetGenerator(int index, u64 seed){
 }
 
 GameScene::GameScene(int world_type_index):
-    m_World(std::move(GetGenerator(world_type_index, 12345)))
+    m_World(std::move(GetGenerator(world_type_index, 12345))),
+    m_InventoryLayer(&m_Player)
 {}
 
 void GameScene::OnUpdate(float dt){

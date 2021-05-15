@@ -111,6 +111,10 @@ void Player::RenderDebugInfo(){
     UIRenderer::DrawString(position, 20, {0, m_WindowSize.y - 20});
 }
 
+void Player::Select(Block block){
+    m_InventoryBar[m_Current] = block;
+}
+
 void Player::Dig(){
     Vector4f dir = m_Camera.RotationMatrix() * Vector4f(0, 0, 1, 1);
     Vector3f direction(dir.x, dir.y, dir.z);//Vector3f(cos(Rad(m_Camera.Rotation().x)),cos(Rad(m_Camera.Rotation().y)),cos(Rad(m_Camera.Rotation().z)));

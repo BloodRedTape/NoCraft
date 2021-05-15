@@ -21,10 +21,11 @@ public:
     static Vector2i GetTextSize(const std::string &text, int font_height);
 
     static void DrawButton(Vector2i position, Vector2i size, Color tint);
-private:
-    static int CharToIndex(char ch);
 
     static Vector2i MousePosition();
+private:
+
+    static int CharToIndex(char ch);
 };
 
 

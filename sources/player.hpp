@@ -20,7 +20,7 @@ private:
     float m_MouseSpeed = 1/6.f;
     float m_DigDistance = 6;
     float m_DigAccuracy = 0.01;
-
+private:
     static constexpr int s_InventorySize = 9;
     int m_Current = 0;
     Block m_InventoryBar[s_InventorySize]{Block::Dirt, Block::Grass, Block::OakWood, Block::BirchLeaves, Block::Sand, Block::Water};
@@ -37,6 +37,8 @@ public:
     void OnEvent(const Event &e);
 
     void RenderPlayerView();
+
+    void Select(Block block);
 private:
     void RenderCursor();
 
