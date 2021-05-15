@@ -13,6 +13,8 @@ private:
     Texture m_Background;
     Texture m_Logo;
     Texture m_LoadingScreen;
+
+    int m_CurrentGenerationType = 0;
 public:
     MainMenuScene();
 

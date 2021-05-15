@@ -5,8 +5,6 @@
 #include "world/world.hpp"
 #include "render/world_renderer.hpp"
 #include "player.hpp"
-#include "world/generators/extreme_world_generator.hpp"
-#include "world/generators/natural_world_generator.hpp"
 
 #include "render/render_2d.hpp"
 
@@ -15,7 +13,7 @@
 
 class GameScene: public BaseScene{
 private:
-    World m_World{std::move(std::make_unique<NaturalWorldGenerator>(12345))};
+    World m_World;
     WorldRenderer m_Renderer{&m_World};
     Player m_Player;
 
@@ -24,7 +22,7 @@ private:
     GamePauseLayer m_GamePauseLayer;
     InventoryLayer m_InventoryLayer;
 public:
-    GameScene();
+    GameScene(int world_type_index);
 
     void OnUpdate(float dt)override;
 

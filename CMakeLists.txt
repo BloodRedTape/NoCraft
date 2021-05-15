@@ -18,8 +18,9 @@ set(SOURCES
     sources/world/block.cpp
     sources/world/world.cpp
     sources/world/generators/biome.cpp
-    sources/world/generators/extreme_world_generator.cpp
     sources/world/generators/natural_world_generator.cpp
+    sources/world/generators/extreme_world_generator.cpp
+    sources/world/generators/super_flat_world_generator.cpp
     sources/scenes/scene.cpp
     sources/scenes/game_scene.cpp
     sources/scenes/main_menu_scene.cpp

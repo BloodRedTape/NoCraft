@@ -26,6 +26,14 @@ void MainMenuScene::OnUpdate(float dt){
         OnPlayPressed();
     }
 
+    std::string names[]={
+        "World: Natural  ",
+        "World: Extreme  ",
+        "World: SuperFlat"
+    };
+
+    layout.Selector(names, m_CurrentGenerationType);
+
     if(layout.Button("Exit")){
         Stop();
     }
@@ -49,6 +57,6 @@ void MainMenuScene::OnPlayPressed(){
     Render2D::Flush();
     Render2D::SwapBuffers();
 
-    SceneManager::SetScene(std::make_unique<GameScene>());
+    SceneManager::SetScene(std::make_unique<GameScene>(m_CurrentGenerationType));
 
 }

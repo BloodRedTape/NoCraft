@@ -33,8 +33,7 @@ void Minecraft::OnUpdate(float dt){
 }
 
 bool Minecraft::OnEvent(const Event &e){
-    UI::SetUIState(e);
-
+    UI::UpdateUIState(e);
     return SceneManager::GetCurrentScene()->OnEvent(e);
 }
 

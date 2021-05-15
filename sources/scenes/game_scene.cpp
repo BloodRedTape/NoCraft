@@ -1,8 +1,23 @@
 #include "game_scene.hpp"
 #include "platform/io.hpp"
 #include "main_menu_scene.hpp"
+#include "world/generators/natural_world_generator.hpp"
+#include "world/generators/extreme_world_generator.hpp"
+#include "world/generators/super_flat_world_generator.hpp"
 
-GameScene::GameScene(){
+std::unique_ptr<WorldGenerator> GetGenerator(int index, u64 seed){
+    switch (index) {
+    case 0: return std::make_unique<NaturalWorldGenerator>(seed);
+    case 1: return std::make_unique<ExtremeWorldGenerator>(seed);
+    case 2: return std::make_unique<SuperFlatWorldGenerator>(seed);
+    }
+    Assert(false);
+    return nullptr;
+}
+
+GameScene::GameScene(int world_type_index):
+    m_World(std::move(GetGenerator(world_type_index, 12345)))
+{
     m_Player.Move({0, 40, 0});
 }
 
