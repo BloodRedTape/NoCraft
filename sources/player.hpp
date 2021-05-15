@@ -10,31 +10,52 @@
 
 class Player{
 private:
+    World *m_World;
+    WorldRenderer m_Renderer;
+
+    Vector2i m_WindowSize;
+
     Camera m_Camera{Camera::Perspective(100, -100, Rad(1), 1280.f/720)};
     float m_Speed = 60.f;
     float m_MouseSpeed = 1/6.f;
     float m_DigDistance = 6;
     float m_DigAccuracy = 0.01;
 
-    Block m_Current = Block::OakWood;
+    static constexpr int s_InventorySize = 9;
+    int m_Current = 0;
+    Block m_InventoryBar[s_InventorySize]{Block::Dirt, Block::Grass, Block::OakWood, Block::BirchLeaves, Block::Sand, Block::Water};
+
+    int m_SlotSize = m_WindowSize.x / 20;
+    int m_BarSize = s_InventorySize * m_SlotSize;
+    Texture m_BarSlot;
+    Texture m_BarSelector;
 public:
-    void Update(float dt);
+    Player(World *world);
 
-    const Camera &GetCamera()const{
-        return m_Camera;
-    }
+    void OnUpdate(float dt);
 
-    void Dig(World &world, WorldRenderer &renderer);
+    void OnEvent(const Event &e);
 
-    void Place(World &world, WorldRenderer &renderer);
+    void RenderPlayerView();
+private:
+    void RenderCursor();
 
-    void Pick(World &world);
+    void RenderBar();
+
+    void RenderDebugInfo();
+
+    void Dig();
+
+    void Place();
+
+    void Pick();
 
     void Move(Vector3f g_direction);
-
+public:
     Vector2i MouseResetPosition(){
         return {800, 400};
     }
+
 };
 
 #endif//PLAYER_HPP

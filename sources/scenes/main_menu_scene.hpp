@@ -14,7 +14,7 @@ private:
     Texture m_Logo;
     Texture m_LoadingScreen;
 
-    int m_CurrentGenerationType = 0;
+    int m_CurrentGenerationType = 2;
 public:
     MainMenuScene();
 

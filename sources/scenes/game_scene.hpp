@@ -6,21 +6,19 @@
 #include "render/world_renderer.hpp"
 #include "player.hpp"
 
-#include "render/render_2d.hpp"
-
 #include "layers/game_pause_layer.hpp"
 #include "layers/inventory_layer.hpp"
 
 class GameScene: public BaseScene{
 private:
     World m_World;
-    WorldRenderer m_Renderer{&m_World};
-    Player m_Player;
+    Player m_Player{&m_World};
 
     Layer *m_CurrentLayer = nullptr;
 
     GamePauseLayer m_GamePauseLayer;
     InventoryLayer m_InventoryLayer;
+
 public:
     GameScene(int world_type_index);
 

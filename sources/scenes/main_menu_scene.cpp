@@ -27,8 +27,8 @@ void MainMenuScene::OnUpdate(float dt){
     }
 
     std::string names[]={
-        "World: Natural  ",
-        "World: Extreme  ",
+        "World:  Natural ",
+        "World:  Extreme ",
         "World: SuperFlat"
     };
 
