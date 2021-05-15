@@ -18,9 +18,17 @@ std::unique_ptr<WorldGenerator> GetGenerator(int index, u64 seed){
 }
 
 GameScene::GameScene(int world_type_index):
-    m_World(std::move(GetGenerator(world_type_index, 12345))),
+    m_World(std::move(GetGenerator(world_type_index, 534))),
     m_InventoryLayer(&m_Player)
-{}
+{
+    Chunk &spawn = m_World.Get({0,0});
+    for(int i = 0; i<Chunk::SizeY; i++){
+        if(spawn.Get({0,i,0}) == Block::Air){
+            m_Player.SetPosition({0,i+1,0});
+            break;
+        }
+    } 
+}
 
 void GameScene::OnUpdate(float dt){
     if(!m_CurrentLayer){

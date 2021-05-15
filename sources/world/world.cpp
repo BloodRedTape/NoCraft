@@ -1,5 +1,6 @@
 #include "world.hpp"
 #include "platform/io.hpp"
+#include <cmath>
 
 namespace std{
     std::size_t hash<Vector2i>::operator()(const Vector2i &value)const noexcept{
@@ -33,6 +34,18 @@ Chunk &World::GetEmpty(Vector2i chunk_coords){
         chunk = new_chunk.first;
     }
     return chunk->second;
+}
+
+Block World::GetBlock(Vector3f block_coords){
+    block_coords.x = std::round(block_coords.x);
+    block_coords.y = std::round(block_coords.y);
+    block_coords.z = std::round(block_coords.z);
+
+    Vector2i chunk_pos = GetChunkPos(block_coords);
+    Chunk &chunk = Get(chunk_pos);
+    Vector3i block_pos = Vector3i(block_coords.x - chunk_pos.x * Chunk::SizeX, block_coords.y, block_coords.z - chunk_pos.y * Chunk::SizeZ);
+
+    return chunk.Get(block_pos);
 }
 
 void World::Place(Vector2i chunk_coords, Vector3i block_coords, Block block){

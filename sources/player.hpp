@@ -16,7 +16,7 @@ private:
     Vector2i m_WindowSize;
 
     Camera m_Camera{Camera::Perspective(100, -100, Rad(1), 1280.f/720)};
-    float m_Speed = 60.f;
+    float m_Speed = 10.f;
     float m_MouseSpeed = 1/6.f;
     float m_DigDistance = 6;
     float m_DigAccuracy = 0.01;
@@ -29,6 +29,8 @@ private:
     int m_BarSize = s_InventorySize * m_SlotSize;
     Texture m_BarSlot;
     Texture m_BarSelector;
+private:
+    Vector3f m_Movement;
 public:
     Player(World *world);
 
@@ -53,7 +55,10 @@ private:
     void Pick();
 
     void Move(Vector3f g_direction);
+
 public:
+    void SetPosition(Vector3f position);
+    
     Vector2i MouseResetPosition(){
         return {800, 400};
     }

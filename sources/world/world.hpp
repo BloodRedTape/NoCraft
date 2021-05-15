@@ -30,6 +30,8 @@ public:
 
     Chunk &GetEmpty(Vector2i chunk_coords);
 
+    Block GetBlock(Vector3f block_coords);
+
     void Place(Vector2i chunk_coords, Vector3i block_coords, Block block);
 
     void TryUnGet(Vector2i chunk_coords);

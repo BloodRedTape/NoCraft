@@ -7,12 +7,20 @@
 #include "render/render_2d.hpp"
 #include "servers/display_server.hpp"
 
+bool operator>=(const Vector3f &left, const Vector3f &right){
+    return left.x >= right.x && left.y >= right.y && left.z >= right.z;
+}
+
+constexpr Vector3f Round(Vector3f vec, Vector3i round){
+    return {round.x?std::round(vec.x):vec.x,round.y?std::round(vec.y):vec.y, round.z?std::round(vec.z):vec.z};
+}
+
 Player::Player(World *world):
     m_World(world),
     m_Renderer(world),
     m_WindowSize(DisplayServer::Window.Size().width, DisplayServer::Window.Size().height)
 {
-    Move({0, 40, 0});
+    m_Camera.Move({0, 40, 0});
 
     SamplerProperties props;
     props.MagFiltering = FilteringMode::Nearest;
@@ -44,6 +52,44 @@ void Player::OnUpdate(float dt){
     Mouse::SetGlobalPosition({MouseResetPosition().x, MouseResetPosition().y});
 
     m_Camera.Rotate(Vector3f(-offset.y, offset.x, 0)/(1/m_MouseSpeed));
+
+              
+    Vector3i face_direction[]={
+        { 0, 0,-1},
+        { 0, 0, 1},
+        {-1, 0, 0},
+        { 1, 0, 0},
+        { 0, 1, 0},
+        { 0,-2, 0}
+    };
+
+    Vector3f player_pos = (m_Camera.Position() - Vector3f(0, 1, 0)) + m_Movement;
+    
+    for(int i = 0; i<4; i++){
+        if(IsOpaque(m_World->GetBlock(player_pos - Vector3f(face_direction[i]))) || IsOpaque(m_World->GetBlock(player_pos - Vector3f(face_direction[i]) + Vector3f(0, 1, 0)))){
+            Vector3f face(face_direction[i]);
+            auto block_coords = Round(player_pos, face_direction[i]);
+            if(block_coords*face >= player_pos*face)
+                m_Movement += block_coords - player_pos;
+        }
+    }
+
+    for(int i = 4; i<6; i++){
+        if(IsOpaque(m_World->GetBlock(player_pos - Vector3f(face_direction[i])))){
+            Vector3f face(face_direction[i]);
+            auto block_coords = Round(player_pos, face_direction[i]);
+            if(block_coords*face >= player_pos*face)
+                m_Movement += block_coords - player_pos;
+        }
+    }
+
+
+    m_Camera.Move(m_Movement);
+    m_Movement = {};
+    Vector3f rounded = Round(m_Camera.Position(),{1,1,1});
+    if(IsOpaque(m_World->GetBlock(rounded))){
+        m_Camera.Move(rounded - m_Camera.Position());
+    }
 }
 
 void Player::OnEvent(const Event &e){
@@ -157,8 +203,11 @@ void Player::Place(){
         if(IsOpaque(chunk.Get(rounded))){
             if(!prev_chunk)return;
 
-            prev_chunk->Place(prev_rounded, m_InventoryBar[m_Current]);
-            m_Renderer.Regenerate(prev_chunk_pos);
+            if(prev_rounded != Vector3i(Round(m_Camera.Position() - Vector3f(0, 0, 0), {1,1,1})) 
+            && prev_rounded != Vector3i(Round(m_Camera.Position() - Vector3f(0, 1, 0), {1,1,1}))){
+                prev_chunk->Place(prev_rounded, m_InventoryBar[m_Current]);
+                m_Renderer.Regenerate(prev_chunk_pos);
+            }
             return;
         }
         prev_chunk = &chunk;
@@ -191,5 +240,10 @@ void Player::Pick(){
 void Player::Move(Vector3f direction){
     Vector4f new_dir = RotationY(Rad(-m_Camera.Rotation().y)) * Vector4f{direction.x, 0, direction.z, 0};
 
-    m_Camera.Move({new_dir.x, direction.y, new_dir.z});
+    //m_Camera.Move({new_dir.x, direction.y, new_dir.z});
+    m_Movement += Vector3f(new_dir.x, direction.y, new_dir.z);
+}
+
+void Player::SetPosition(Vector3f position){
+    m_Camera.Move(-m_Camera.Position() + position);
 }

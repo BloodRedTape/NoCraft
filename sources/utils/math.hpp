@@ -3,7 +3,7 @@
 
 #include <cmath>
 #include "core/math/matrix4.hpp"
-
+#include "core/math/vector3.hpp"
 
 using namespace StraitX;
 
