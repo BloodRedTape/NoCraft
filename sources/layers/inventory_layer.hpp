@@ -1,13 +1,16 @@
 #ifndef INVENTORY_LAYER_HPP
 #define INVENTORY_LAYER_HPP
 
-#include "layers/base_ui_layer.hpp"
+#include "utils/layers.hpp"
 #include "world/block.hpp"
+#include "servers/display_server.hpp"
 #include <cmath>
 #include "player.hpp"
 
-class InventoryLayer: public BaseUILayer{
+class InventoryLayer: public Layer{
 private:
+    Vector2i WindowSize{DisplayServer::Window.Size().width, DisplayServer::Window.Size().height};
+
     int m_HorizontalItemsCount = 6;
     int m_VerticalItemsCount = int(std::ceil(float(Block::Count)/m_HorizontalItemsCount));
     int m_ItemSize = WindowSize.x/15;

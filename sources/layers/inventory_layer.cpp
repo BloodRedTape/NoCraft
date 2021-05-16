@@ -1,6 +1,7 @@
 #include "layers/inventory_layer.hpp"
 #include "render/render_2d.hpp"
 #include "render/ui_renderer.hpp"
+#include "utils/rect.hpp"
 
 InventoryLayer::InventoryLayer(Player *player):
     m_Player(player)

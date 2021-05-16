@@ -2,6 +2,7 @@
 #include "main_menu_scene.hpp"
 #include "game_scene.hpp"
 #include "render/render_2d.hpp"
+#include "render/ui_renderer.hpp"
 #include "ui/ui.hpp"
 
 MainMenuScene::MainMenuScene(){

@@ -1,10 +1,12 @@
 #ifndef GAME_PAUSE_LAYER_HPP
 #define GAME_PAUSE_LAYER_HPP
 
-#include "layers/base_ui_layer.hpp"
+#include "utils/layers.hpp"
 #include "ui/ui.hpp"
+#include "servers/display_server.hpp"
 
-class GamePauseLayer: public BaseUILayer{
+class GamePauseLayer: public Layer{
+    Vector2i WindowSize{DisplayServer::Window.Size().width, DisplayServer::Window.Size().height};
 public:
     void OnUpdate(float dt)override;
 
