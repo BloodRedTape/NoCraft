@@ -7,7 +7,8 @@
 
 VertexAttribute Vertex::s_Attributes[]={
     VertexAttribute::Float3,
-    VertexAttribute::Float2
+    VertexAttribute::Float2,
+    VertexAttribute::Float3
 };
 
 ShaderBinding bindings[]={

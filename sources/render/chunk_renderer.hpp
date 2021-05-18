@@ -14,6 +14,7 @@ using namespace StraitX;
 struct Vertex{
     Vector3f a_Position;
     Vector2f a_TexCoord;
+    Vector3f a_Normal;
 
     static VertexAttribute s_Attributes[];
 };

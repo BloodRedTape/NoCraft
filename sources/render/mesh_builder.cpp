@@ -56,6 +56,15 @@ Vector3f cube_positions[]={
     { 0.5,-0.5, 0.5}
 };
 
+Vector3f cube_normals[]={
+    { 0, 0,-1},
+    { 0, 0, 1},
+    {-1, 0, 0},
+    { 1, 0, 0},
+    { 0, 1, 0},
+    { 0,-1, 0}
+};
+
 Vector3i face_direction[]={
     { 0, 0,-1},
     { 0, 0, 1},
@@ -97,6 +106,11 @@ void PushFace(Block block, Face face, Vector3f offset){
     vertices[1].a_TexCoord = {coords.First.x + coords.Second.x, coords.First.y};
     vertices[2].a_TexCoord = {coords.First.x,                   coords.First.y};
     vertices[3].a_TexCoord = {coords.First.x + coords.Second.x, coords.First.y + coords.Second.y};
+
+    vertices[0].a_Normal = cube_normals[face];
+    vertices[1].a_Normal = cube_normals[face];
+    vertices[2].a_Normal = cube_normals[face];
+    vertices[3].a_Normal = cube_normals[face];
     
     PushVertex(vertices[0]);
     PushVertex(vertices[1]);

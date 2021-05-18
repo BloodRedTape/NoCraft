@@ -4,7 +4,7 @@
 
 static Renderer2D *s_Impl;
 
-Vector2f (&Render2D::DefaultTextureCoords)[4] = s_Impl->DefaultTextureCoords;
+Vector2f (&Render2D::DefaultTextureCoords)[4] = s_Impl->s_DefaultTextureCoords;
 
 void Render2D::Init(){
     s_Impl = new Renderer2D(DisplayServer::Window.Pass());
