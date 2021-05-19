@@ -21,7 +21,18 @@ enum TextureIndex{
     WinterGrass,
     BirchLogAround,
     BirchLogTop,
-    BirchLeaves
+    BirchLeaves,
+    DiamondOre,
+    GoldenOre,
+    RedstoneOre,
+    Coblestone,
+    DiamondBlock,
+    GoldenBlock,
+    RedstoneBlock,
+    EmeraldBlock,
+    EmeraldOre,
+    SpruceWood,
+    BirchWood
 };
 
 static BlockTextures s_TextureTable[] = {
@@ -42,6 +53,14 @@ static BlockTextures s_TextureTable[] = {
         Dirt
     },
     {
+        WinterGrassDirt,
+        WinterGrassDirt,
+        WinterGrassDirt,
+        WinterGrassDirt,
+        WinterGrass,
+        Dirt
+    },
+    {
         Dirt,
         Dirt,
         Dirt,
@@ -58,12 +77,36 @@ static BlockTextures s_TextureTable[] = {
         Stone
     },
     {
+        Coblestone,
+        Coblestone,
+        Coblestone,
+        Coblestone,
+        Coblestone,
+        Coblestone,
+    },
+    {
         Sand,
         Sand,
         Sand,
         Sand,
         Sand,
         Sand
+    },
+    {
+        CactusAround,
+        CactusAround,
+        CactusAround,
+        CactusAround,
+        CactusTop,
+        CactusTop
+    },
+    {
+        Water,
+        Water,
+        Water,
+        Water,
+        Water,
+        Water
     },
     {
         OakLogAround,
@@ -82,28 +125,12 @@ static BlockTextures s_TextureTable[] = {
         OakWood
     },
     {
-        Water,
-        Water,
-        Water,
-        Water,
-        Water,
-        Water
-    },
-    {
         OakLeaves,
         OakLeaves,
         OakLeaves,
         OakLeaves,
         OakLeaves,
         OakLeaves
-    },
-    {
-        CactusAround,
-        CactusAround,
-        CactusAround,
-        CactusAround,
-        CactusTop,
-        CactusTop
     },
     {
         SpruceLogAround,
@@ -114,20 +141,20 @@ static BlockTextures s_TextureTable[] = {
         SpruceLogTop
     },
     {
+        SpruceWood,
+        SpruceWood,
+        SpruceWood,
+        SpruceWood,
+        SpruceWood,
+        SpruceWood
+    },
+    {
         SpruceLeaves,
         SpruceLeaves,
         SpruceLeaves,
         SpruceLeaves,
         SpruceLeaves,
         SpruceLeaves
-    },
-    {
-        WinterGrassDirt,
-        WinterGrassDirt,
-        WinterGrassDirt,
-        WinterGrassDirt,
-        WinterGrass,
-        Dirt
     },
     {
         BirchLogAround,
@@ -138,13 +165,85 @@ static BlockTextures s_TextureTable[] = {
         BirchLogTop
     },
     {
+        BirchWood,
+        BirchWood,
+        BirchWood,
+        BirchWood,
+        BirchWood,
+        BirchWood
+    },
+    {
         BirchLeaves,
         BirchLeaves,
         BirchLeaves,
         BirchLeaves,
         BirchLeaves,
         BirchLeaves
-    }
+    },
+    {
+        DiamondOre,
+        DiamondOre,
+        DiamondOre,
+        DiamondOre,
+        DiamondOre,
+        DiamondOre,
+    },
+    {
+        GoldenOre,
+        GoldenOre,
+        GoldenOre,
+        GoldenOre,
+        GoldenOre,
+        GoldenOre,
+    },
+    {
+        RedstoneOre,
+        RedstoneOre,
+        RedstoneOre,
+        RedstoneOre,
+        RedstoneOre,
+        RedstoneOre,
+    },
+    {
+        EmeraldOre,
+        EmeraldOre,
+        EmeraldOre,
+        EmeraldOre,
+        EmeraldOre,
+        EmeraldOre,
+    },
+    {
+        DiamondBlock,
+        DiamondBlock,
+        DiamondBlock,
+        DiamondBlock,
+        DiamondBlock,
+        DiamondBlock,
+    },
+    {
+        GoldenBlock,
+        GoldenBlock,
+        GoldenBlock,
+        GoldenBlock,
+        GoldenBlock,
+        GoldenBlock,
+    },
+    {
+        RedstoneBlock,
+        RedstoneBlock,
+        RedstoneBlock,
+        RedstoneBlock,
+        RedstoneBlock,
+        RedstoneBlock,
+    },
+    {
+        EmeraldBlock,
+        EmeraldBlock,
+        EmeraldBlock,
+        EmeraldBlock,
+        EmeraldBlock,
+        EmeraldBlock,
+    },
 };
 
 BlockTextures GetBlockTextures(Block block){

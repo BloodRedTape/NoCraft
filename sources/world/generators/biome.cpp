@@ -7,35 +7,48 @@ void BuildBirchTree(Chunk &chunk, Vector3i origin);
 void BuildSpruceTree(Chunk &chunk, Vector3i origin);
 void BuildCactus(Chunk &chunk, Vector3i origin);
 
+void BuildPyramid(Chunk &chunk, Vector3i origin);
+
+
 BiomeDefinition s_BiomeTable[]={
     {
         Block::WinterGrass,
         Block::Dirt,
         80,
-        &BuildSpruceTree
+        &BuildSpruceTree,
+        99990,
+        &BuildNothing
     },
     {
         Block::Grass,
         Block::Dirt,
         50,
-        &BuildBirchTree
+        &BuildBirchTree,
+        99990,
+        &BuildNothing
     },
     {
         Block::Sand,
         Block::Sand,
         200,
-        &BuildCactus
+        &BuildCactus,
+        10000,
+        &BuildPyramid
     },
     {
         Block::Grass,
         Block::Dirt,
         50,
-        &BuildOakTree
+        &BuildOakTree,
+        99990,
+        &BuildNothing
     },
     {
         Block::Grass,
         Block::Dirt,
         200000,
+        &BuildNothing,
+        99990,
         &BuildNothing
     },
 };
@@ -136,4 +149,54 @@ void BuildCactus(Chunk &chunk, Vector3i origin){
     for(int i = origin.y; i<std::min(256, origin.y + cactus_height); i++)
         chunk.TrySet({origin.x, i, origin.z}, Block::Cactus);
 }
+
+
+
+
+void BuildPyramid(Chunk &chunk, Vector3i origin){
+    int pyramid_height = 5;
+    for(int i = 1; i<=pyramid_height; i++){
+        for(int j = -i; j <= i; j++){
+            for(int k = -i; k<=i; k++){
+                chunk.TrySet(origin + Vector3i(j, pyramid_height - i, k), Block::Sand);
+            }
+        }
+    }
+    for(int j = -pyramid_height; j <= pyramid_height; j++){
+        for(int k = -pyramid_height; k<=pyramid_height; k++){
+            for(int i = origin.y-1; !IsOpaque(chunk.Get(Vector3i{j + origin.x, i, k + origin.z})) && i>0; i--)
+                chunk.TrySet(Vector3i{j + origin.x, i, k + origin.z}, Block::Sand);
+        }
+    }
+    chunk.TrySet(origin + Vector3i(0, pyramid_height, 0), Block::Sand);
+
+    for(int i = -pyramid_height; i<=pyramid_height; i++){
+        chunk.TrySet(origin + Vector3i(i, 0, 0), Block::Air);
+        chunk.TrySet(origin + Vector3i(i, 1, 0), Block::Air);
+    }
+    chunk.TrySet(origin + Vector3i(-pyramid_height, 1, 1), Block::Sand);
+    chunk.TrySet(origin + Vector3i(-pyramid_height, 1,-1), Block::Sand);
+    chunk.TrySet(origin + Vector3i(-pyramid_height, 2, 0), Block::Sand);
+    chunk.TrySet(origin + Vector3i(-pyramid_height + 1, 2, 0), Block::Sand);
+
+    chunk.TrySet(origin + Vector3i( pyramid_height, 1, 1), Block::Sand);
+    chunk.TrySet(origin + Vector3i( pyramid_height, 1,-1), Block::Sand);
+    chunk.TrySet(origin + Vector3i( pyramid_height, 2, 0), Block::Sand);
+    chunk.TrySet(origin + Vector3i( pyramid_height - 1, 2, 0), Block::Sand);
+
+    for(int i = -pyramid_height; i<=pyramid_height; i++){
+        chunk.TrySet(origin + Vector3i(0, 0, i), Block::Air);
+        chunk.TrySet(origin + Vector3i(0, 1, i), Block::Air);
+    }
+    chunk.TrySet(origin + Vector3i(1, 1, -pyramid_height), Block::Sand);
+    chunk.TrySet(origin + Vector3i(-1, 1,-pyramid_height), Block::Sand);
+    chunk.TrySet(origin + Vector3i(0, 2, -pyramid_height), Block::Sand);
+    chunk.TrySet(origin + Vector3i(0, 2, -pyramid_height + 1), Block::Sand);
+
+    chunk.TrySet(origin + Vector3i(1, 1,  pyramid_height), Block::Sand);
+    chunk.TrySet(origin + Vector3i(-1, 1, pyramid_height), Block::Sand);
+    chunk.TrySet(origin + Vector3i(0, 2,  pyramid_height), Block::Sand);
+    chunk.TrySet(origin + Vector3i(0, 2,  pyramid_height - 1), Block::Sand);
+}
+
 

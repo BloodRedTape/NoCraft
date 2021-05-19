@@ -19,6 +19,8 @@ struct BiomeDefinition{
     Block SubMantle;
     u32 EntityChance;
     void (*BuildEntityProc)(Chunk &world, Vector3i origin);
+    u32 StructureChance;
+    void (*BuildStructureProc)(Chunk &world, Vector3i origin);
 };
 
 

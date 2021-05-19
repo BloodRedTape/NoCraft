@@ -11,9 +11,9 @@ class InventoryLayer: public Layer{
 private:
     Vector2i WindowSize{DisplayServer::Window.Size().width, DisplayServer::Window.Size().height};
 
-    int m_HorizontalItemsCount = 6;
+    int m_HorizontalItemsCount = 9;
     int m_VerticalItemsCount = int(std::ceil(float(Block::Count)/m_HorizontalItemsCount));
-    int m_ItemSize = WindowSize.x/15;
+    int m_ItemSize = WindowSize.x/18;
     int m_ItemMargin = m_ItemSize/2;
 
     int m_TopMargin = WindowSize.y/4;

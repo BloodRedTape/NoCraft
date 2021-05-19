@@ -7,7 +7,8 @@
 NaturalWorldGenerator::NaturalWorldGenerator(u64 seed):
     m_TerrainGenerator(seed),
     m_BiomeGenerator(seed * 2 + 14234),
-    m_EntitiesPlot(seed/2 - 12345)
+    m_EntitiesPlot(seed/2 - 12345),
+    m_StructuresPlot(seed*23423523432 + 89738945)
 {}
 
 Vector2<s64> GetChunkOffset(Vector2i chunk_coords){
@@ -24,6 +25,10 @@ Biome NaturalWorldGenerator::GetWorldBiome(Vector2<s64> block_coords){
 
 short NaturalWorldGenerator::GetEntityValue(Vector2<s64> block_coords){
     return m_EntitiesPlot.GetWrapped(block_coords.x + 9675, block_coords.y + 32412) * std::numeric_limits<short>::max();
+}
+
+short NaturalWorldGenerator::GetStructureValue(Vector2<s64> block_coords){
+    return m_StructuresPlot.GetWrapped(block_coords.x + 249234675, block_coords.y - 12332412) * std::numeric_limits<short>::max();
 }
 
 void NaturalWorldGenerator::Generate(Chunk &chunk, Vector2i chunk_coords){
@@ -98,6 +103,9 @@ void NaturalWorldGenerator::Generate(Chunk &chunk, Vector2i chunk_coords){
                 if(GetEntityValue(Vector2<s64>{offset.x + i, offset.y + j} + Vector2<s64>(offsets[b])) % biome.EntityChance == 1
                 && height > m_WaterLevel)
                     biome.BuildEntityProc(chunk, Vector3i{i, height + 1, j} + Vector3i(offsets[b].x, 0, offsets[b].y));
+                if(GetStructureValue(Vector2<s64>{offset.x + i, offset.y + j} + Vector2<s64>(offsets[b])) % biome.StructureChance == 1
+                && height > m_WaterLevel)
+                    biome.BuildStructureProc(chunk, Vector3i{i, height + 1, j} + Vector3i(offsets[b].x, 0, offsets[b].y));
             }
         }
     }

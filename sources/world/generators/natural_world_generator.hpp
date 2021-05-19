@@ -11,9 +11,11 @@ class NaturalWorldGenerator: public WorldGenerator{
 private:
     static constexpr size_t s_WorldPower = 12;//13;
     static constexpr size_t s_GeneratorSize = 2 << s_WorldPower;
+    static constexpr size_t s_StructuresSize = s_GeneratorSize >> 2;
     NoiseGenerator2D<s_GeneratorSize> m_TerrainGenerator;
     NoiseGenerator2D<s_GeneratorSize> m_BiomeGenerator;
     RandomPlot2D<s_GeneratorSize> m_EntitiesPlot;
+    RandomPlot2D<s_StructuresSize> m_StructuresPlot;
 
     u8 m_WaterLevel = 30;
     u8 m_GenerationSpan = 70;
@@ -30,6 +32,8 @@ public:
     Biome GetWorldBiome(Vector2<s64> block_coords);
 
     short GetEntityValue(Vector2<s64> block_coords);
+
+    short GetStructureValue(Vector2<s64> block_coords);
 
 };
 
