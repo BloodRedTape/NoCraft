@@ -19,5 +19,5 @@ void Mesh::New(const void *vertex_data, int vertex_data_size, const void *index_
     Assert(index_data_size % sizeof(u32) == 0);
     IndicesCount = index_data_size / sizeof(u32);
 
-    Println("Mesh uploading took % mcs", cl.GetElapsedTime().AsMicroseconds());
+    //Println("Mesh uploading took % mcs", cl.GetElapsedTime().AsMicroseconds());
 }

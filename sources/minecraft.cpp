@@ -7,10 +7,12 @@
 #include "render/ui_renderer.hpp"
 #include "ui/ui.hpp"
 #include "platform/memory.hpp"
+#include "platform/opengl.hpp"
 
 #include "scenes/main_menu_scene.hpp"
 
 Result Minecraft::OnInitialize(){
+    glEnable(GL_CLIP_DISTANCE0);
     Render2D::Init();
     UIRenderer::Init();
 

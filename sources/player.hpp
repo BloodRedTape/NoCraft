@@ -16,7 +16,7 @@ private:
     Vector2i m_WindowSize;
 
     Camera m_Camera{Camera::Perspective(100, -100, Rad(1), 1280.f/720)};
-    float m_Speed = 10.f;
+    float m_Speed = 60.f;
     float m_MouseSpeed = 1/6.f;
     float m_DigDistance = 6;
     float m_DigAccuracy = 0.01;

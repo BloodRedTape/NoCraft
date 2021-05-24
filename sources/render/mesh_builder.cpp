@@ -2,7 +2,7 @@
 #include "graphics/api/dma.hpp"
 #include "platform/io.hpp"
 #include "core/math/vector3.hpp"
-#include "chunk_renderer.hpp"
+#include "vertex.hpp"
 #include "texture_atlas.hpp"
 #include "platform/clock.hpp"
 #include <vector>
@@ -74,23 +74,52 @@ Vector3i face_direction[]={
     { 0,-1, 0}
 };
 
+template <size_t v_Count, size_t i_Count>
+struct MeshBuilder{
+    Vertex VertexBuildArray[v_Count];
+    size_t VertexBuildArraySize = 0;
+
+    u32 IndexBuildArray[i_Count];
+    size_t IndexBuildArraySize = 0;
+
+    void PushVertex(const Vertex &vertex){
+        VertexBuildArray[VertexBuildArraySize++] = vertex;
+    }
+
+    void PushIndex(u32 index){
+        IndexBuildArray[IndexBuildArraySize++] = index;
+    }
+
+    void FillIndices(){
+        for(u32 i = 0; i<VertexBuildArraySize / 4; i++){
+            PushIndex(i * 4 + 0);
+            PushIndex(i * 4 + 3);
+            PushIndex(i * 4 + 1);
+            PushIndex(i * 4 + 0);
+            PushIndex(i * 4 + 1);
+            PushIndex(i * 4 + 2);
+        }
+    }
+
+    void Reset(){
+        VertexBuildArraySize = 0;
+        IndexBuildArraySize = 0;
+    }
+
+    Mesh GetMesh(){
+        return Mesh(VertexBuildArray, VertexBuildArraySize * sizeof(Vertex), IndexBuildArray, IndexBuildArraySize * sizeof(u32));
+    }
+};
+
 constexpr size_t s_ChunkVolume = Chunk::SizeX * Chunk::SizeY * Chunk::SizeZ;
 
-Vertex s_VertexBuildArray[s_ChunkVolume * 6 * 4];
-size_t s_VertexBuildArraySize = 0;
+constexpr size_t s_VertexCount = s_ChunkVolume * 6 * 4;
+constexpr size_t s_IndexCount = s_ChunkVolume * 6 * 6;
 
-void PushVertex(const Vertex &vertex){
-    s_VertexBuildArray[s_VertexBuildArraySize++] = vertex;
-}
+MeshBuilder<s_VertexCount, s_IndexCount> s_SolidBuilder;
+MeshBuilder<s_VertexCount, s_IndexCount> s_ReflectBuilder;
 
-u32 s_IndexBuildArray[s_ChunkVolume * 6 * 6];
-size_t s_IndexBuildArraySize = 0;
-
-void PushIndex(u32 index){
-    s_IndexBuildArray[s_IndexBuildArraySize++] = index;
-}
-
-void PushFace(Block block, Face face, Vector3f offset){
+void PushFace(MeshBuilder<s_VertexCount, s_IndexCount> &builder, Block block, Face face, Vector3f offset){
     if(block == Block::Air)return;
 
     auto coords = TextureAtlas::Get().GetTextureCoordsBase(GetBlockTextures(block).Faces[face]);
@@ -112,17 +141,18 @@ void PushFace(Block block, Face face, Vector3f offset){
     vertices[2].a_Normal = cube_normals[face];
     vertices[3].a_Normal = cube_normals[face];
     
-    PushVertex(vertices[0]);
-    PushVertex(vertices[1]);
-    PushVertex(vertices[2]);
-    PushVertex(vertices[3]);
+    builder.PushVertex(vertices[0]);
+    builder.PushVertex(vertices[1]);
+    builder.PushVertex(vertices[2]);
+    builder.PushVertex(vertices[3]);
 }
 
 }//namespace ::
 
-Mesh MeshBuilder::Build(const Chunk &chunk, Vector3i position){
-    s_VertexBuildArraySize = 0;
-    s_IndexBuildArraySize = 0;
+Pair<Mesh, Mesh> ChunkMeshBuilder::Build(const Chunk &chunk, Vector3i position){
+    s_SolidBuilder.Reset();
+    s_ReflectBuilder.Reset();
+
     Clock cl;
     position.x *= Chunk::SizeX;
     position.y *= Chunk::SizeY;
@@ -135,26 +165,26 @@ Mesh MeshBuilder::Build(const Chunk &chunk, Vector3i position){
 
                 if(!Exist(block))continue;
 
-                for(int f = 0; f<6; f++){
-                    auto look_at = face_direction[f];
+                if(IsReflective(block)){
+                    if(!Exist(chunk.GetChecked({j, i + 1, k})))
+                        PushFace(s_ReflectBuilder, block, Face::Top, Vector3f(j,i,k) + Vector3f(position));
+                }else{
+                    for(int f = 0; f<6; f++){
+                        auto look_at = face_direction[f];
 
-                    if(Exist(chunk.GetChecked({j + look_at.x,i + look_at.y,k + look_at.z})))continue;
+                        if(IsOpaque(chunk.GetChecked({j + look_at.x,i + look_at.y,k + look_at.z})))continue;
 
-                    PushFace(block, (Face)f, Vector3f(j,i,k) + Vector3f(position));
+                        PushFace(s_SolidBuilder, block, (Face)f, Vector3f(j,i,k) + Vector3f(position));
+                    }
                 }
+
             }
         }
     }
 
-    for(u32 i = 0; i<s_VertexBuildArraySize / 4; i++){
-        PushIndex(i * 4 + 0);
-        PushIndex(i * 4 + 3);
-        PushIndex(i * 4 + 1);
-        PushIndex(i * 4 + 0);
-        PushIndex(i * 4 + 1);
-        PushIndex(i * 4 + 2);
-    }
+    s_SolidBuilder.FillIndices();
+    s_ReflectBuilder.FillIndices();
 
-    Println("Mesh Building took % mcs", cl.GetElapsedTime().AsMicroseconds());
-    return Mesh(s_VertexBuildArray, s_VertexBuildArraySize * sizeof(Vertex), s_IndexBuildArray, s_IndexBuildArraySize * sizeof(u32));
+    //Println("Mesh Building took % mcs", cl.GetElapsedTime().AsMicroseconds());
+    return {s_SolidBuilder.GetMesh(), s_ReflectBuilder.GetMesh()};
 }

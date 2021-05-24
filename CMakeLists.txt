@@ -7,7 +7,10 @@ set(SOURCES
     sources/minecraft.cpp 
     sources/player.cpp
     sources/render/render_2d.cpp
-    sources/render/chunk_renderer.cpp
+    sources/render/vertex.cpp
+    sources/render/solid_pass.cpp
+    sources/render/reflect_pass.cpp
+    sources/render/final_pass.cpp
     sources/render/world_renderer.cpp
     sources/render/mesh_builder.cpp
     sources/render/texture_atlas.cpp

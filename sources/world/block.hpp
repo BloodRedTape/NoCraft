@@ -41,6 +41,18 @@ inline bool IsOpaque(Block block){
     return true;
 }
 
+inline bool IsReflective(Block block){
+    if(block == Block::Water)
+        return true;
+    return false;
+}
+
+inline bool IsSolid(Block block){
+    if(block != Block::Air && block != Block::Water)
+        return true;
+    return false;
+}
+
 inline bool Exist(Block block){
     return block != Block::Air && block < Block::Count;
 }

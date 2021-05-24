@@ -1,24 +1,22 @@
-#version 440
+#version 440 core
 
 layout (location = 0)in vec3 a_Position;
 layout (location = 1)in vec2 a_TexCoords;
 layout (location = 2)in vec3 a_Normal;
 
 layout (location = 0)out vec2 v_TexCoords;
-layout (location = 1)out float v_Lightness;
+layout (location = 1)out vec3 v_FragPos;
+layout (location = 2)out vec3 v_Normal;
 
-layout (binding = 1)uniform Transforms{
+layout (binding = 3)uniform Transforms{
     mat4 u_Projection;
     mat4 u_View;
-    vec4 u_ClippingPlane;
 };
 
-vec3 s_SunPos = vec3(200, 400, 300);
-
 void main(){
-    gl_ClipDistance[0] = dot(u_ClippingPlane,vec4(a_Position.xyz, 1.0));
+    v_FragPos = a_Position;
     gl_Position = u_Projection * u_View * vec4(a_Position.xyz, 1.0);
 
     v_TexCoords = a_TexCoords;
-    v_Lightness = dot(normalize(s_SunPos), a_Normal);
+    v_Normal = a_Normal;
 }

@@ -3,9 +3,10 @@
 
 #include "mesh.hpp"
 #include "world/chunk.hpp"
+#include "core/pair.hpp"
 
-struct MeshBuilder{
-    static Mesh Build(const Chunk &chunk, Vector3i position);
+struct ChunkMeshBuilder{
+    static Pair<Mesh, Mesh> Build(const Chunk &chunk, Vector3i position);
 };
 
 #endif//CHUNK_MESHER_HPP

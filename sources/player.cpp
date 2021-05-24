@@ -108,9 +108,7 @@ void Player::OnEvent(const Event &e){
 }
 
 void Player::RenderPlayerView(){
-    Render2D::Clear(Color::LightBlue);
-
-    m_Renderer.Render(m_Camera);
+    m_Renderer.Render(m_Camera, 30);
     RenderCursor();
     RenderBar();
     RenderDebugInfo();

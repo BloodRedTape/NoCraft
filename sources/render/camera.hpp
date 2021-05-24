@@ -12,6 +12,7 @@ private:
     Vector3f m_Position;
     Vector3f m_Rotation;
 public:
+
     void Move(Vector3f direction);
 
     void Rotate(Vector3f rotation);
@@ -22,6 +23,10 @@ public:
 
     Vector3f Rotation()const{
         return -m_Rotation;
+    }
+
+    void ReflectInX(){
+        m_Rotation.x *= -1;
     }
 
     const Matrix4f &Projection()const;

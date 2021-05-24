@@ -11,39 +11,37 @@
 
 using namespace StraitX;
 
-struct Vertex{
-    Vector3f a_Position;
-    Vector2f a_TexCoord;
-    Vector3f a_Normal;
-
-    static VertexAttribute s_Attributes[];
-};
-
-struct Uniform{
-    Matrix4f u_Projection;
-    Matrix4f u_View;
-};
-
-class ChunkRenderer{
+class SolidPass{
+private:
+    struct Uniform{
+        Matrix4f u_Projection;
+        Matrix4f u_View;
+        Vector4f u_ClippingPlane;
+    };
 private:
     RenderWindow &m_Window;
     Vector2u m_WindowSize;
 
     Shader *m_Shaders[2] = {};
     GraphicsPipeline *m_Pipeline = nullptr;
+    RenderPass *m_Pass;
 
     CPUBuffer m_StagingUniform;
     GPUBuffer m_UniformBuffer;
 public:
-    ChunkRenderer();
+    SolidPass();
 
-    ~ChunkRenderer();
+    ~SolidPass();
 
-    void BeginScene(const Camera &camera);
+    void BeginScene(const Camera &camera, Vector4f clipping_plane, Framebuffer *framebuffer);
 
     void EndScene();
 
     void Draw(const Mesh &mesh);
+
+    RenderPass *Pass(){
+        return m_Pass;
+    }
 };
 
 #endif//CHUNK_RENDERER_HPP
