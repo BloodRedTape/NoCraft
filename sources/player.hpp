@@ -25,8 +25,8 @@ private:
     int m_Current = 0;
     Block m_InventoryBar[s_InventorySize]{Block::Dirt, Block::Grass, Block::OakWood, Block::BirchLeaves, Block::Sand, Block::Water};
 
-    int m_SlotSize = m_WindowSize.x / 20;
-    int m_BarSize = s_InventorySize * m_SlotSize;
+    float m_SlotSize = m_WindowSize.x / 20.f;
+    float m_BarSize = s_InventorySize * m_SlotSize;
     Texture m_BarSlot;
     Texture m_BarSelector;
 private:

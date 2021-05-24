@@ -12,7 +12,7 @@ void GamePauseLayer::OnRender(){
 
     VerticalLayout layout{{0, WindowSize.y/2}, {WindowSize.x, WindowSize.y/2}, {WindowSize.x/2, WindowSize.y / 10}, WindowSize.y / 40};
 
-    if(layout.Button("Save and Quit"))
+    if(layout.Button("Quit"))
         SceneManager::SetScene(std::make_unique<MainMenuScene>());
 }
     

@@ -9,7 +9,7 @@ ApplicationConfig GetApplicationConfig(){
             SamplePoints::Samples_1,
             TextureFormat::Depth32
         },
-        {1600, 900}
+        {1920, 1080}
     };
 }
 

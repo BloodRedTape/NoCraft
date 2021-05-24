@@ -123,7 +123,7 @@ void Player::RenderCursor(){
 }
 
 void Player::RenderBar(){
-    int x_beg = m_WindowSize.x/2 - m_BarSize/2;
+    float x_beg = m_WindowSize.x/2.f - m_BarSize/2.f;
     for(int i = 0; i<s_InventorySize; i++){
         Render2D::DrawRect({x_beg,0}, {m_SlotSize, m_SlotSize}, m_BarSlot);
 
